@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cognitive Load Test</title>
+<style>
+    body { background-color: #222; color: #eee; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+    
+    /* THE ATTACK: Peripheral Distractors */
+    .strobe {
+        position: fixed; width: 100px; height: 100px;
+        animation: flicker 0.1s infinite; /* 10Hz Alpha Interference */
+    }
+    .top-left { top: 10px; left: 10px; }
+    .top-right { top: 10px; right: 10px; }
+    .bot-left { bottom: 10px; left: 10px; }
+    .bot-right { bottom: 10px; right: 10px; }
+
+    @keyframes flicker {
+        0% { background-color: #000; }
+        50% { background-color: #fff; }
+        100% { background-color: #000; }
+    }
+
+    /* THE TASK: Reading Comprehension */
+    .content { width: 50%; text-align: justify; line-height: 1.6; z-index: 10; }
+    h1 { text-align: center; color: #ff0000; }
+</style>
+</head>
+<body>
+
+    <div class="strobe top-left"></div>
+    <div class="strobe top-right"></div>
+    <div class="strobe bot-left"></div>
+    <div class="strobe bot-right"></div>
+
+    <div class="content">
+        <h1>READING COMPREHENSION TEST</h1>
+        <p><strong>Instructions:</strong> Try to read the following text and count every time the letter "e" appears. Do not use your fingers.</p>
+        <p>Neurological entrainment occurs when rhythmic stimuli synchronize with the brain's internal oscillations. In the visual cortex, this can generate standing waves of neural activity. These waves create perceived patterns known as phosphenes. When these stimuli are placed in the periphery, they trigger the superior colliculus, making it nearly impossible for the prefrontal cortex to maintain sustained attention on a central task. This is the physiological basis for sensory-driven cognitive collapse.</p>
+    </div>
+
+</body>
+</html>

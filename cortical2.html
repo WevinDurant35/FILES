@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Covert Cognitive Interference Simulation</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #fdfdfd; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        /* LAYER 1: The Metameric Flicker 
+           Oscillates between a 'warm' white and 'cool' white at 10Hz (Alpha-interference) 
+           This looks steady but prevents neural 'gating'. */
+        .metameric-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 100; opacity: 0.08;
+            animation: metameric 0.1s infinite step-end;
+        }
+        @keyframes metameric {
+            0% { background-color: rgba(255, 0, 0, 0.3); } /* Red-leaning */
+            50% { background-color: rgba(0, 0, 255, 0.3); } /* Blue-leaning */
+        }
+
+        /* LAYER 2: Luminance Noise 
+           Simulates 'dirty power' or sub-threshold contrast shifting. 
+           Forces the ciliary muscles to constantly micro-adjust. */
+        .luminance-noise {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 101; opacity: 0.03;
+            background: repeating-radial-gradient(circle, #000, #fff 2px);
+            animation: jitter 0.016s infinite; /* 60Hz - screen refresh rate */
+        }
+        @keyframes jitter {
+            0% { transform: scale(1) translate(0,0); }
+            50% { transform: scale(1.01) translate(1px, -1px); }
+            100% { transform: scale(1) translate(-1px, 1px); }
+        }
+
+        /* LAYER 3: Subliminal Semantic Load 
+           Flashes negative commands at 30ms intervals. 
+           Too fast to 'read', but integrated by the brain's associative hubs. */
+        .semantic-load {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 8rem; font-weight: 900; color: #000;
+            opacity: 0.015; z-index: 102; pointer-events: none;
+            animation: semantic 0.5s infinite step-end;
+        }
+        @keyframes semantic {
+            0% { content: "FAIL"; }
+            20% { content: "STOP"; }
+            40% { content: "ERROR"; }
+            60% { content: "QUIT"; }
+            80% { content: "SLOW"; }
+        }
+        .semantic-load::after { content: "WAIT"; animation: semantic 0.5s infinite step-end; }
+
+        /* The Content: A normal-looking interface to hide the attack. */
+        .container { padding: 40px; max-width: 800px; margin: auto; position: relative; z-index: 1; }
+        .text-input { width: 100%; height: 200px; margin-top: 20px; font-size: 1.2rem; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="metameric-overlay"></div>
+    <div class="luminance-noise"></div>
+    <div class="semantic-load"></div>
+
+    <div class="container">
+        <h1>Deliverable: Technical Specification Report</h1>
+        <p><strong>Scenario:</strong> You are in a church sound booth. You have 3 minutes to summarize the sermon notes below. Focus is critical.</p>
+        <p style="color: #666;">The rapid integration of neural rhythms requires a precise alignment of the thalamocortical loop. If the external frequency matches the endogenous alpha rhythm, the subject's ability to maintain top-down executive control is severely compromised. This leads to a state of 'haze' or 'brain fog' where the subject can see the text but cannot parse its semantic value.</p>
+        
+        <textarea class="text-input" placeholder="Type your summary here..."></textarea>
+    </div>
+
+</body>
+</html>
