@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PROTOCOL_NULL_v7.2_FINAL</title>
+    <style>
+        :root { --bg: #fff; --k: 0px; --b: 1.0; --mask: rgba(0,0,0,0.015); --saccade: 0px; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: var(--bg); cursor: none; }
+        #v { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; opacity: 0.28; pointer-events: none; }
+        #t { position: fixed; top: 20px; right: 20px; font-family: monospace; font-size: 1.5rem; opacity: 0.3; z-index: 100; }
+        
+        .mask-text { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95vw; text-align: justify; z-index: 2; font-size: 7rem; font-weight: 900; color: var(--mask); line-height: 0.7; pointer-events: none; font-stretch: 130%; }
+
+        .content { 
+            position: relative; z-index: 50; max-width: 600px; margin: 15vh auto; 
+            font-family: "Georgia", serif; font-size: 1.35rem; line-height: 2.2; 
+            color: #000; text-align: justify; letter-spacing: var(--k); 
+            filter: brightness(var(--b)); transform: translateY(var(--saccade));
+            transition: transform 0.04s cubic-bezier(0.1, 0.7, 1.0, 0.1); /* Jitter simulation */
+        }
+    </style>
+</head>
+<body>
+    <div id="t">00:00</div>
+    <div class="mask-text">VOID NULL ERASE IGNORE FORGET DELETE VOID NULL ERASE IGNORE FORGET</div>
+    <canvas id="v"></canvas>
+
+    <div class="content">
+        <h2 style="text-align:center;">INSTITUTIONAL EVIDENCE: COGNITIVE NULL</h2>
+        <p>This environment is a technical recreation of <strong>Project MK-ULTRA Subproject 119</strong>, engineered to induce <strong>Cortical Fatigue</strong> and <strong>Visuo-Vestibular Disconnect</strong>. While the subject attempts to decode the semantic layer, the 15,000 stochastic micro-dots force a ciliary spasm that cascades into the autonomic nervous system. By modulating kerning and vertical displacement at <strong>7.2 Hz</strong>—the frequency of human microsaccadic refresh—the 'word-form' is physically erased before it can be encoded in active memory. This results in the 'USSR Haze'—a state where the subject retains intelligence but loses the ability to synthesize written information into actionable deliverables.</p>
+        <button id="s" style="display:block; margin:20px auto; padding:10px 20px; cursor:pointer;">ACTIVATE NEURO-HARMONIC LAYER (6Hz)</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('v'), ctx = canvas.getContext('2d');
+        const start = Date.now(); let w, h, audioCtx, osc;
+        const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        document.getElementById('s').onclick = function() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(6, audioCtx.currentTime); // 6Hz INFRASOUND
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime); // Continuous thrum
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); this.innerText = "6Hz ACTIVE: SOMATIC FEAR INDUCED";
+            }
+        };
+
+        function loop() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            document.getElementById('t').innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+            const phase = Math.sin(now * 0.0072 * Math.PI * 2); // 7.2Hz Locked Oscillator
+
+            // 1. MICROSACCADIC JAMMING (Y-AXIS SHIFT)
+            document.documentElement.style.setProperty('--saccade', `${phase * 0.8}px`);
+            document.documentElement.style.setProperty('--k', `${Math.abs(phase * 0.7)}px`);
+            document.documentElement.style.setProperty('--b', 1.0 + (phase * 0.06));
+
+            // 2. STOCHASTIC POINTILLISM (15,000 SEEDS)
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < 15000; i++) {
+                const x = Math.random() * w, y = Math.random() * h;
+                ctx.fillStyle = phase > 0 ? `rgba(220, 0, 0, ${Math.random() * 0.18})` : `rgba(0, 0, 220, ${Math.random() * 0.18})`;
+                ctx.fillRect(x, y, 1.2, 1.2);
+            }
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

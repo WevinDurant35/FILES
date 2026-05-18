@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FINAL_PROTOCOL_EMETIC_NULL</title>
+    <style>
+        :root { --w: #ffffff; --k: 0.01px; --drift-x: 0px; --drift-y: 0px; --mask: 0; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: var(--w); cursor: none; }
+        
+        /* THE NOISE: 30,000 Stochastic seeds at 6.6Hz (The 'Sway' frequency) */
+        #c { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; opacity: 0.15; pointer-events: none; }
+        
+        #t { position: fixed; top: 20px; right: 20px; font-family: monospace; font-size: 1rem; opacity: 0.1; z-index: 100; }
+
+        /* THE VESTIBULAR TRAP: A subtle, large-scale 'breathing' background pattern 
+           that causes the observer's sense of 'level' to drift. */
+        .sway-bg {
+            position: fixed; top: -10%; left: -10%; width: 120%; height: 120%;
+            background: radial-gradient(circle, rgba(0,0,0,0.01) 1px, transparent 1px);
+            background-size: 80px 80px;
+            transform: translate(var(--drift-x), var(--drift-y));
+            z-index: 1;
+        }
+
+        .mask-text { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 100vw; text-align: justify; z-index: 2; 
+            font-family: serif; font-weight: 900; font-size: 9rem; 
+            color: rgba(0,0,0,var(--mask)); line-height: 0.5; pointer-events: none; 
+        }
+
+        .content { 
+            position: relative; z-index: 50; max-width: 580px; margin: 18vh auto; 
+            font-family: "Georgia", serif; font-size: 1.2rem; line-height: 2.3; 
+            color: #080808; text-align: justify; letter-spacing: var(--k); 
+            text-shadow: 0.3px 0px 0px rgba(255,0,0,0.1), -0.3px 0px 0px rgba(0,0,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div id="t">00:00</div>
+    <div class="sway-bg"></div>
+    <div class="mask-text" id="mask">VOID NULL ERASE IGNORE FORGET DELETE VOID NULL ERASE IGNORE FORGET</div>
+    <canvas id="c"></canvas>
+
+    <div class="content">
+        <h2 style="text-align:center; opacity: 0.7;">COGNITIVE_SATIATION_V9</h2>
+        <p>The sensation of profound nausea in the <strong>Emetic Null</strong> protocol is achieved through the total collapse of the visuo-vestibular anchor. By modulating a 30,000-point stochastic field at <strong>6.6 Hz</strong> (the frequency of physical sway), the brain is forced into a state of 'sensory mismatch'. The background pattern drifts at a sub-perceptual rate of 0.3 pixels, creating the illusion of <strong>proprioceptive instability</strong>. The subject experiences an immediate metabolic drain, leading to cold sweats, dizziness, and emesis as the autonomic nervous system attempts to resolve a 'poisoned' sensory environment. Memory encoding is disabled as the prefrontal cortex prioritizes physical survival over semantic synthesis.</p>
+        <button id="s" style="opacity:0.1; border:none; background:none; cursor:crosshair;">[AUDIO_ACTIVATE]</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+        const start = Date.now(); let w, h, audioCtx, osc;
+        const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        document.getElementById('s').onclick = function() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator(); osc.type = 'sine';
+                osc.frequency.setValueAtTime(6, audioCtx.currentTime); 
+                const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); this.style.display = 'none';
+            }
+        };
+
+        function loop() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            document.getElementById('t').innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+            
+            // 6.6Hz Emetic Oscillation
+            const phase = Math.sin(now * 0.0066 * Math.PI * 2);
+
+            // 1. NON-LINEAR DRIFT (The 'Sea-Sickness' Engine)
+            const dx = Math.sin(now * 0.0004) * 15;
+            const dy = Math.cos(now * 0.0003) * 15;
+            document.documentElement.style.setProperty('--drift-x', `${dx}px`);
+            document.documentElement.style.setProperty('--drift-y', `${dy}px`);
+
+            // 2. SUB-PERCEPTUAL METAMERIC SHIFT
+            const r = 255 - Math.abs(Math.floor(phase * 2)); 
+            document.documentElement.style.setProperty('--w', `rgb(${r}, 255, 255)`);
+
+            // 3. KERNING 'BREATH'
+            document.documentElement.style.setProperty('--k', `${(Math.sin(now * 0.001) * 0.25).toFixed(2)}px`);
+
+            // 4. RANDOM SEMANTIC MASK
+            if (Math.random() > 0.998) {
+                document.documentElement.style.setProperty('--mask', Math.random() * 0.02);
+            }
+
+            // 5. STOCHASTIC SATURATION (30,000 dots)
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < 30000; i++) {
+                const x = Math.random() * w, y = Math.random() * h;
+                ctx.fillStyle = phase > 0 ? `rgba(200, 0, 0, 0.09)` : `rgba(0, 0, 200, 0.09)`;
+                ctx.fillRect(x, y, 1, 1);
+            }
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

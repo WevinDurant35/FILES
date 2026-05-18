@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Institutional Cognitive Baseline: 7.2Hz Phase</title>
+    <style>
+        :root { --bg-shift: #ffffff; --timer-op: 0.3; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: var(--bg-shift); cursor: none; }
+        
+        #interferenceCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none; opacity: 0.18; }
+        
+        #timer { position: fixed; top: 20px; right: 20px; font-family: monospace; font-size: 1.2rem; color: #000; opacity: var(--timer-op); z-index: 20; }
+
+        .mask-layer { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 90vw; text-align: justify; z-index: 5; 
+            font-family: serif; font-weight: 900; font-size: 6rem; 
+            color: rgba(0,0,0,0.012); line-height: 0.8; pointer-events: none; 
+        }
+
+        .document-layer {
+            position: relative; z-index: 10;
+            max-width: 600px; margin: 120px auto;
+            font-family: "Garamond", serif; font-size: 1.25rem; line-height: 2.1;
+            color: #111; text-align: justify;
+            /* Sub-perceptual jitter creates semantic fog */
+            animation: jitter 0.138s infinite alternate; /* 7.24 Hz */
+        }
+
+        @keyframes jitter {
+            0% { text-shadow: 0.4px 0px 0px rgba(200,0,0,0.15), -0.4px 0px 0px rgba(0,0,200,0.15); transform: translateX(0.2px); }
+            100% { text-shadow: -0.4px 0px 0px rgba(200,0,0,0.15), 0.4px 0px 0px rgba(0,0,200,0.15); transform: translateX(-0.2px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="timer">00:00</div>
+    <canvas id="interferenceCanvas"></canvas>
+    <div class="mask-layer">VOID NULL ERASE IGNORE VOID NULL ERASE IGNORE VOID NULL ERASE IGNORE</div>
+
+    <div class="document-layer">
+        <h2 style="text-align: center;">MEMORANDUM: OPERATIONAL COGNITIVE LOAD</h2>
+        <p>This environment utilizes <strong>metameric oscillation</strong> to bypass conscious detection while inducing profound <strong>thalamocortical dysrhythmia</strong>. By shifting the background between 'Warm' and 'Cool' whites at the 7.2Hz Alpha-transition frequency, the visual system is denied a stable baseline for semantic integration. The pointillistic noise creates a <strong>ciliary spasm</strong>, forcing the eye to hunt for focus in a field of stochastic interference. This results in the 'USSR Haze'—a state where the subject can perceive individual characters but is biologically incapable of maintaining the working memory required to synthesize full sentences.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('interferenceCanvas');
+        const ctx = canvas.getContext('2d');
+        const timerEl = document.getElementById('timer');
+        let width, height, start = Date.now();
+
+        const resize = () => { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        function render() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            timerEl.innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+
+            // 1. METAMERIC WHITE SHIFT (The Denial Vector)
+            // Oscillates between FFF (White) and FDF (Cool) / FFD (Warm)
+            const phase = Math.sin(now * 0.0072 * Math.PI * 2);
+            const r = 254 + (phase * 1); 
+            const b = 254 - (phase * 1);
+            document.documentElement.style.setProperty('--bg-shift', `rgb(${r}, 255, ${b})`);
+
+            // 2. STOCHASTIC POINTILLISTIC NOISE
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < 9000; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                // Clashing interrogation frequencies
+                ctx.fillStyle = phase > 0 
+                    ? `rgba(210, 0, 0, ${Math.random() * 0.12})` 
+                    : `rgba(0, 0, 190, ${Math.random() * 0.12})`;
+                ctx.fillRect(x, y, 1.1, 1.1);
+            }
+
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>

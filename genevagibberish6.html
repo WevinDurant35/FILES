@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PROTOCOL_NULL_v8.4_SUB_LIMINAL</title>
+    <style>
+        :root { --w-shift: #ffffff; --kern: 0.01px; --mask-op: 0; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: var(--w-shift); cursor: none; }
+        
+        /* THE STOCHASTIC FIELD: 25,000 Micro-Dots at 0.08 opacity */
+        #c { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; opacity: 0.12; pointer-events: none; }
+        
+        #t { position: fixed; top: 20px; right: 20px; font-family: monospace; font-size: 1.1rem; opacity: 0.15; z-index: 100; }
+
+        /* THE COUNTER-TEXT: Random fade-in/out */
+        .mask-text { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 98vw; text-align: justify; z-index: 2; 
+            font-family: serif; font-weight: 900; font-size: 8rem; 
+            color: rgba(0,0,0,var(--mask-op)); line-height: 0.6; pointer-events: none; 
+            transition: color 4s ease-in-out;
+        }
+
+        .content { 
+            position: relative; z-index: 50; max-width: 600px; margin: 15vh auto; 
+            font-family: "Georgia", serif; font-size: 1.25rem; line-height: 2.2; 
+            color: #050505; text-align: justify; letter-spacing: var(--kern); 
+        }
+    </style>
+</head>
+<body>
+    <div id="t">00:00</div>
+    <div class="mask-text" id="mask">VOID NULL ERASE IGNORE FORGET DELETE VOID NULL ERASE IGNORE FORGET</div>
+    <canvas id="c"></canvas>
+
+    <div class="content">
+        <h2 style="text-align:center; opacity: 0.8;">BASELINE_REPORT_7.2</h2>
+        <p>Current research into <strong>Stochastic Liminality</strong> suggests that cognitive resistance is most effectively eroded when the stimulus is <em>felt</em> but not <em>seen</em>. By saturating the white-space with 25,000 microscopic red-blue seeds at a sub-perceptual opacity, we induce <strong>cortical noise</strong>. The background metameric shift (varying by only one RGB value) prevents the visual system from anchoring, while the font kerning is modulated at <strong>0.2px</strong>. To the conscious mind, the page is stable. To the thalamus, it is a field of persistent instability, leading to the rapid onset of 'Digital Vertigo' and the erasure of semantic deliverables from the working memory buffer.</p>
+        <button id="s" style="border:none; background:transparent; color:#999; cursor:pointer; font-size: 0.8rem; margin: auto; display: block;">INITIATE HARMONIC LAYER (6Hz)</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+        const start = Date.now(); let w, h, audioCtx, osc;
+        const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        // 6Hz INFRASONIC EMISSION SCRIPT
+        document.getElementById('s').onclick = function() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(6, audioCtx.currentTime); 
+                const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); this.style.opacity = "0.2";
+            }
+        };
+
+        function loop() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            document.getElementById('t').innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+            
+            // THE 7.2Hz HEARTBEAT
+            const phase = Math.sin(now * 0.0072 * Math.PI * 2);
+
+            // 1. SUB-PERCEPTUAL METAMERIC SHIFT
+            const r = 255 - Math.abs(Math.floor(phase * 1)); 
+            const b = 255 - Math.abs(Math.floor(Math.cos(now * 0.0072) * 1));
+            document.documentElement.style.setProperty('--w-shift', `rgb(${r}, 255, ${b})`);
+
+            // 2. KERNING DRIFT (0.2px Scale)
+            const k = (Math.sin(now * 0.0005) * 0.2).toFixed(2);
+            document.documentElement.style.setProperty('--kern', `${k}px`);
+
+            // 3. RANDOM MASK FADE
+            if (Math.random() > 0.995) {
+                const op = Math.random() * 0.018;
+                document.documentElement.style.setProperty('--mask-op', op);
+            }
+
+            // 4. FINEST-GRAIN STOCHASTIC NOISE (25,000 dots)
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < 25000; i++) {
+                const x = Math.random() * w, y = Math.random() * h;
+                ctx.fillStyle = phase > 0 ? `rgba(200, 0, 0, 0.08)` : `rgba(0, 0, 200, 0.08)`;
+                ctx.fillRect(x, y, 1, 1); // 1-pixel 'grain'
+            }
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>

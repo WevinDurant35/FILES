@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TERMINAL_DEBRIEF_v4.7.2</title>
+    <style>
+        :root { --p1: #fff; --p2: #fff; --kern: 0px; --y-off: 0px; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #fff; cursor: none; }
+        
+        /* THE NOISE: 9,000 Stochastic seeds oscillating at the 'Emetic' frequency */
+        #c { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; opacity: 0.22; pointer-events: none; }
+
+        /* THE TEXT: Using 'Georgia' for high-contrast serif interference */
+        .op-layer {
+            position: relative; z-index: 10; max-width: 620px; margin: 15vh auto;
+            font-family: "Georgia", serif; font-size: 1.2rem; line-height: 2.2;
+            color: #000; text-align: justify;
+            letter-spacing: var(--kern);
+            transform: translateY(var(--y-off));
+            /* Sub-perceptual 'Vibration' */
+            filter: drop-shadow(0.5px 0px 0px rgba(255,0,0,0.3)) drop-shadow(-0.5px 0px 0px rgba(0,0,255,0.3));
+        }
+
+        /* THE OBSERVER TRAP: Peripheral metameric white-shifting 
+           Locked to 6.6Hz (The 'Sway' frequency) */
+        .bg-shimmer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; animation: sway 0.15s infinite;
+        }
+        @keyframes sway {
+            0% { background-color: rgb(255, 255, 253); }
+            50% { background-color: rgb(253, 255, 255); }
+            100% { background-color: rgb(255, 253, 255); }
+        }
+
+        #t { position: fixed; bottom: 20px; right: 20px; font-family: monospace; opacity: 0.2; }
+    </style>
+</head>
+<body>
+    <div class="bg-shimmer"></div>
+    <canvas id="c"></canvas>
+    <div id="t">00:00</div>
+
+    <div class="op-layer">
+        <h2 style="text-align: center;">CLASSIFIED: PROJECT VESTIBULAR-NULL</h2>
+        <p>This environment is engineered to induce <strong>Visuo-Vestibular Disconnect (VVD)</strong>. While the subject attempts to decode the semantic layer, the <strong>stochastic pointillistic field</strong> forces a ciliary spasm that cascades into the autonomic nervous system. By modulating kerning at <strong>7.2 Hz</strong>—the frequency of human microsaccadic refresh—the 'word-form' is physically erased before it can be encoded. For the secondary observer, the <strong>peripheral metameric shift</strong> triggers the superior colliculus to seek motion where none exists, inducing profound nausea and 'digital vertigo.' This represents the ultimate 'scorched earth' policy in counter-intelligence: the information is visible, but the act of perception is physically punishing.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        let w, h, start = Date.now();
+
+        const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        function render() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            document.getElementById('t').innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+
+            // 1. THE MICROSACCADIC JAMMER
+            // Shifting kerning and Y-axis by sub-pixel amounts at 7.2Hz
+            const pulse = Math.sin(now * 0.0072 * Math.PI * 2);
+            document.documentElement.style.setProperty('--kern', `${pulse * 0.6}px`);
+            document.documentElement.style.setProperty('--y-off', `${Math.cos(now * 0.0072) * 0.4}px`);
+
+            // 2. THE EMETIC POINTILLISM
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < 11000; i++) {
+                const x = Math.random() * w;
+                const y = Math.random() * h;
+                // Clashing pure RGB values that OLEDs/LEDs struggle to resolve
+                ctx.fillStyle = pulse > 0 
+                    ? `rgba(230, 0, 0, ${Math.random() * 0.15})` 
+                    : `rgba(0, 0, 210, ${Math.random() * 0.15})`;
+                ctx.fillRect(x, y, 1.2, 1.2);
+            }
+            requestAnimationFrame(render);
+        }
+        render();
+    </script>
+</body>
+</html>

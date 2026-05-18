@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Institutional Cognitive Baseline Test</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #fff; cursor: none; }
+        
+        /* The Canvas: Where the 7Hz micro-dot entrainment happens */
+        #noiseCanvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 1; pointer-events: none; opacity: 0.12; /* Subtle enough to be 'off-white' */
+        }
+
+        /* The Content: High-contrast, but the background noise 'bleeds' into it */
+        .document-layer {
+            position: relative; z-index: 10;
+            max-width: 600px; margin: 100px auto;
+            font-family: "Garamond", serif; font-size: 1.2rem; line-height: 1.9;
+            color: #000; text-align: justify;
+            /* Sub-perceptual chromatic jitter */
+            animation: jitter 0.14s infinite; /* 7.1 Hz */
+        }
+
+        @keyframes jitter {
+            0% { text-shadow: 0.5px 0px 0px rgba(255,0,0,0.2), -0.5px 0px 0px rgba(0,0,255,0.2); }
+            100% { text-shadow: -0.5px 0px 0px rgba(255,0,0,0.2), 0.5px 0px 0px rgba(0,0,255,0.2); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="noiseCanvas"></canvas>
+
+    <div class="document-layer">
+        <h2 style="text-align: center;">Declassified Memorandum: Project MK-ULTRA/Subproject 119</h2>
+        <p>The transition from overt strobing to <strong>stochastic interference</strong> represents the peak of covert neurological manipulation. By saturating the white-space with micro-chromatic shifts at a constant 7Hz, the interrogator induces <strong>cortical fatigue</strong> without the subject ever perceiving a visual flicker. The nausea reported in Cold War-era 'light-room' environments is the result of <strong>ciliary spasm</strong>—the eye's inability to find a resting focal plane within the pointillistic noise. This creates a state of 'functional dyslexia,' where the subject retains intelligence but loses the ability to synthesize written information into actionable memory.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('noiseCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        function drawNoise() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Create 5000 'Micro-Dots' that shift between 'Cold War' Blue and Red
+            for (let i = 0; i < 5000; i++) {
+                const x = Math.random() * width;
+                const y = Math.random() * height;
+                
+                // 7Hz Phase Shift
+                const phase = Math.sin(Date.now() * 0.007 * Math.PI * 2); 
+                
+                // Logic: Shift dots between specific Red-spectrum and Blue-spectrum
+                // monitors struggle to render these pure, so the brain 'guesses' the depth
+                ctx.fillStyle = phase > 0 
+                    ? `rgba(200, 0, 0, ${Math.random() * 0.1})` 
+                    : `rgba(0, 0, 200, ${Math.random() * 0.1})`;
+
+                ctx.fillRect(x, y, 1.2, 1.2);
+            }
+
+            // Sync to the 7Hz range (approx 140ms per cycle)
+            setTimeout(() => {
+                requestAnimationFrame(drawNoise);
+            }, 70); 
+        }
+
+        drawNoise();
+    </script>
+</body>
+</html>

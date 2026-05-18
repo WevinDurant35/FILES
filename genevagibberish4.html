@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TERMINAL_DEBRIEF: COGNITIVE_NULL_v6.0</title>
+    <style>
+        :root { --bg: #fff; --k: 0px; --b: 1.0; --mask: rgba(0,0,0,0.015); }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: var(--bg); cursor: none; }
+        #v { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 5; opacity: 0.22; pointer-events: none; }
+        #t { position: fixed; top: 20px; right: 20px; font-family: monospace; font-size: 1.5rem; opacity: 0.3; z-index: 100; }
+        .mask-text { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95vw; text-align: justify; z-index: 2; font-size: 7rem; font-weight: 900; color: var(--mask); line-height: 0.7; pointer-events: none; font-stretch: 130%; }
+        .content { position: relative; z-index: 50; max-width: 600px; margin: 15vh auto; font-family: "Georgia", serif; font-size: 1.3rem; line-height: 2.2; color: #000; text-align: justify; letter-spacing: var(--k); filter: brightness(var(--b)); }
+    </style>
+</head>
+<body>
+    <div id="t">00:00</div>
+    <div class="mask-text">VOID NULL ERASE IGNORE FORGET DELETE VOID NULL ERASE IGNORE FORGET</div>
+    <canvas id="v"></canvas>
+    <div class="content">
+        <h2 style="text-align:center;">CLASSIFIED: PROJECT NEURO-HARMONIC NULL</h2>
+        <p>By integrating a <strong>6 Hz infrasonic acoustic layer</strong> with a synchronized <strong>7.2 Hz visual shimmer</strong>, this system targets the executive control networks of the brain. The 6 Hz frequency is documented in 2026 research as a primary disruptor of cognitive resistance, inducing a state of 'primitive somatic fear'. The background metameric shift causes <strong>Pupillary Hippus</strong>, while the 12,000 stochastic micro-dots force the visual cortex into a state of <strong>Cortical Fatigue</strong>. The secondary observer is subjected to 'peripheral sway,' inducing emesis as the brain attempts to resolve the visuo-vestibular disconnect. Within 300 seconds, the active memory buffer is purged, and the subject enters the 'USSR Haze'.</p>
+        <button id="s" style="display:block; margin:20px auto; padding:10px 20px; cursor:pointer;">ACTIVATE NEURO-HARMONIC LAYER</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('v'), ctx = canvas.getContext('2d');
+        const start = Date.now(); let w, h, audioCtx, osc;
+        const resize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
+        window.addEventListener('resize', resize); resize();
+
+        document.getElementById('s').onclick = function() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(6, audioCtx.currentTime); // 6Hz INFRASOUND
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime); // Subtle but constant
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); this.innerText = "LAYER ACTIVE (6Hz)";
+            }
+        };
+
+        function loop() {
+            const now = Date.now();
+            const elapsed = Math.floor((now - start) / 1000);
+            document.getElementById('t').innerText = `${String(Math.floor(elapsed / 60)).padStart(2, '0')}:${String(elapsed % 60).padStart(2, '0')}`;
+            const phase = Math.sin(now * 0.0072 * Math.PI * 2); // 7.2Hz
+
+            // 1. METAMERIC WHITE SHIFT & KERN JITTER
+            const r = 254 + (phase * 1); const b = 254 - (phase * 1);
+            document.documentElement.style.setProperty('--bg', `rgb(${r}, 255, ${b})`);
+            document.documentElement.style.setProperty('--k', `${Math.abs(phase * 0.7)}px`);
+            document.documentElement.style.setProperty('--b', 1.0 + (phase * 0.08));
+
+            // 2. STOCHASTIC NOISE SATURATION (12,000 SEEDS)
+            ctx.clearRect(0, 0, w, h);
+            for (let i = 0; i < 12000; i++) {
+                const x = Math.random() * w, y = Math.random() * h;
+                ctx.fillStyle = phase > 0 ? `rgba(215, 0, 0, ${Math.random() * 0.15})` : `rgba(0, 0, 200, ${Math.random() * 0.15})`;
+                ctx.fillRect(x, y, 1.2, 1.2);
+            }
+            requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+</html>
