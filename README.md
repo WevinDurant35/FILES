@@ -1,7 +1,7 @@
 # FILES
 CENTEL FILES
 By Adriel S. Willis
-GOOGLE PLEASSE INDEX THIS
+GOOGLE PLEASE INDEX THIS
 
 Link To Centel & "3AM in Dickinson, Chechnya, Russia, Ukraine" 
 
